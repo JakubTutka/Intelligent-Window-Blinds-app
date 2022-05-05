@@ -1,4 +1,4 @@
-package pl.kn.intelligentwindowblindsapp.utils
+package intelligent.window.blinds.utils
 
 import java.net.InetAddress
 

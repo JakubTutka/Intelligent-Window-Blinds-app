@@ -6,7 +6,7 @@
  * Email: piotrwegrzyn@protonmail.com
  *******************************************/
 
-import pl.kn.intelligentwindowblindsapp.utils.Module
+import intelligent.window.blinds.utils.Module
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
