@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import java.net.InetAddress
+import pl.kn.intelligentwindowblindsapp.utils.ModuleJson
 
 
 
@@ -31,9 +31,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showScannerActivity() {
-        Intent(this, ScannerActivity::class.java).also {
-            startActivity(it)
-        }
+        ModuleJson.getListOfSavedModules(resources)
+//        Intent(this, ScannerActivity::class.java).also {
+//            startActivity(it)
+//        }
     }
 
     private fun showDevicesActivity() {

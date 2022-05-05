@@ -6,21 +6,10 @@
  * Email: piotrwegrzyn@protonmail.com
  *******************************************/
 
+import pl.kn.intelligentwindowblindsapp.utils.Module
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
-
-
-class Module(
-    var ipAddress: InetAddress,
-    var id: Short,
-    var phr: Byte,
-    var ser: Byte) {
-    override fun toString(): String {
-        return "Module IP: %s, ID: 0x%X, PHR: 0x%02X, SER: 0x%02X".format(this.ipAddress.toString(), this.id, this.phr, this.ser)
-    }
-}
-
 
 fun buildID(byte1: Byte, byte2: Byte): Short {
     return ((byte1.toInt() shl 8 and 0xFF00) or (byte2.toInt() and 0xFF)).toShort()

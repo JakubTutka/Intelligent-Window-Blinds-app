@@ -1,6 +1,6 @@
 package pl.kn.intelligentwindowblindsapp
 
-import Module
+import pl.kn.intelligentwindowblindsapp.utils.Module
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -46,16 +46,7 @@ class ScannerActivity : AppCompatActivity() {
         val newSER: Byte = 0xAB.toByte()
         val newPHR: Byte = 0x4.toByte()
         val addr = InetAddress.getByName("192.168.1.1")
+        val module = Module(addr,newID,newPHR,newSER)
 
-//        var example = Module(addr, newID, newPHR, newSER)
-//
-//        val list = ListView(this)
-//        val items = arrayOf(addr.toString())
-//
-//        val itemsAdapter: ArrayAdapter<String> =
-//            ArrayAdapter(this, R.layout.list_scanned_devices, items)
-//
-//        list.adapter = itemsAdapter
-//        rootLayout.addView(list)
     }
 }
