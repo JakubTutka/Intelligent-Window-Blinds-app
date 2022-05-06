@@ -1,12 +1,11 @@
 package intelligent.window.blinds
 
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import intelligent.window.blinds.utils.ModuleJson
 import java.net.InetAddress
@@ -21,11 +20,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setContentView(R.layout.activity_main)
         var savedModules = getSavedModules()
 
         moduleList = findViewById(R.id.saved_modules_list)
 
-        if (!savedModules.isEmpty()) {
+        if (savedModules.isNotEmpty()) {
 
             var savedTitle = findViewById<TextView>(R.id.saved_modules_title)
             savedTitle.visibility = View.VISIBLE
@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        setContentView(R.layout.activity_main)
 
 
         scannerButton = findViewById(R.id.scanner_button)
