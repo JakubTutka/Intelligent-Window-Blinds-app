@@ -1,9 +1,9 @@
-package pl.kn.intelligentwindowblindsapp.utils
+package intelligent.window.blinds.utils
 
 import android.content.res.Resources
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import pl.kn.intelligentwindowblindsapp.R
+import intelligent.window.blinds.R
 
 object ModuleJson {
 
