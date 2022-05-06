@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         return listOf(iwbuModule(0x1234.toShort(), InetAddress.getByName("10.10.10.10"), 0xBB.toByte(), 0xCC.toByte()))
     }
 
-    private fun getNetworkModules(): List<iwbuModule> {
+    private fun getNetworkModules(): MutableList<iwbuModule> {
         // TODO("Scan network modules")
         val list : MutableList<iwbuModule> = mutableListOf()
         for (i in 1..15) {
