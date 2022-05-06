@@ -6,8 +6,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import intelligent.window.blinds.room.ModuleViewModel
 import java.net.InetAddress
 import intelligent.window.blinds.room.Module as iwbuModule
 
@@ -17,14 +19,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var scannerButton: Button
     private lateinit var moduleList: RecyclerView
     private var scannedModules: List<iwbuModule>? = null
+    private lateinit var mModuleViewModel: ModuleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
         var savedModules = getSavedModules()
 
         moduleList = findViewById(R.id.saved_modules_list)
+        mModuleViewModel = ViewModelProvider(this).get(ModuleViewModel::class.java)
 
         if (savedModules.isNotEmpty()) {
 
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpNetworkModules(): Unit {
-        moduleList.adapter = ScannedModulesAdapter(getNetworkModules())
+        moduleList.adapter = ScannedModulesAdapter(getNetworkModules(), mModuleViewModel)
         moduleList.layoutManager = LinearLayoutManager(this)
     }
 

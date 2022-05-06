@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import intelligent.window.blinds.room.Module
+import intelligent.window.blinds.room.ModuleEntity
+import intelligent.window.blinds.room.ModuleViewModel
+import intelligent.window.blinds.utils.convertModuleToEntity
 
-class ScannedModulesAdapter(private var modules: MutableList<Module>) : RecyclerView.Adapter<ScannedModulesAdapter.ViewHolder>(){
+class ScannedModulesAdapter(private var modules: MutableList<Module>, private var mModuleViewModel: ModuleViewModel) : RecyclerView.Adapter<ScannedModulesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -17,7 +21,7 @@ class ScannedModulesAdapter(private var modules: MutableList<Module>) : Recycler
     ): ScannedModulesAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_module, parent, false)
 
-        return ScannedModulesAdapter.ViewHolder(view).linkAdapter(this)
+        return ScannedModulesAdapter.ViewHolder(view).linkAdapter(this).linkViewModel(mModuleViewModel)
     }
 
     override fun onBindViewHolder(holder: ScannedModulesAdapter.ViewHolder, position: Int) {
@@ -43,18 +47,30 @@ class ScannedModulesAdapter(private var modules: MutableList<Module>) : Recycler
         val addModuleButton: Button = view.findViewById(R.id.item_module_button)
         lateinit var module: Module
         private lateinit var adapter: ScannedModulesAdapter
+        private lateinit var mModuleViewModule: ModuleViewModel
 
         init {
             addModuleButton.setOnClickListener{
-                Log.d("demo", "onClick: Add for module $module")
+                Log.d("demo", "onClick: Add for module ${module.toString()}")
                 adapter.modules.removeAt(adapterPosition)
                 adapter.notifyItemRemoved(adapterPosition)
+                addModuleToDatabase(convertModuleToEntity(module))
             }
         }
 
         fun linkAdapter(adapter: ScannedModulesAdapter) : ScannedModulesAdapter.ViewHolder{
             this.adapter = adapter
             return this
+        }
+
+        fun linkViewModel(viewModel: ModuleViewModel) : ScannedModulesAdapter.ViewHolder{
+            this.mModuleViewModule = viewModel
+            return this
+        }
+
+        fun addModuleToDatabase(moduleEntity: ModuleEntity) {
+            mModuleViewModule.addModule(moduleEntity)
+            Log.d("demo", "added to database: ${module.toString()}")
         }
 
     }
