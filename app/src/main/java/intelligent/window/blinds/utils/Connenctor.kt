@@ -6,7 +6,7 @@
  * Email: piotrwegrzyn@protonmail.com
  *******************************************/
 
-import intelligent.window.blinds.utils.Module
+import intelligent.window.blinds.room.Module
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
@@ -25,7 +25,7 @@ fun receiveBroadcastModules(timeoutMilis: Int, socket: DatagramSocket): Map<Inet
         socket.receive(packet)
         packet.getAddress()?.apply {
             if (!modules.containsKey(packet.getAddress())) {
-                modules[packet.getAddress()] = Module(packet.getAddress(), buildID(packetBuffer[1], packetBuffer[2]), packetBuffer[3], packetBuffer[4])
+                modules[packet.getAddress()] = Module(buildID(packetBuffer[1], packetBuffer[2]), packet.getAddress(), packetBuffer[3], packetBuffer[4])
             }
         }
 

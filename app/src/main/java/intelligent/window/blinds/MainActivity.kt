@@ -7,15 +7,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import intelligent.window.blinds.utils.ModuleJson
 import java.net.InetAddress
-import intelligent.window.blinds.utils.Module as iwbuModule
+import intelligent.window.blinds.room.Module as iwbuModule
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var scannerButton : Button
-    private lateinit var moduleList : RecyclerView
+    private lateinit var scannerButton: Button
+    private lateinit var moduleList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +34,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
         scannerButton = findViewById(R.id.scanner_button)
 
         scannerButton.setOnClickListener {
@@ -44,21 +41,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showScannerActivity() {
-        ModuleJson.getListOfSavedModules(resources)
-//        Intent(this, ScannerActivity::class.java).also {
-//            startActivity(it)
-//        }
-    }
-
     private fun getSavedModules(): List<iwbuModule> {
         // TODO("Open database and select all saved modules")
-        return listOf(iwbuModule(InetAddress.getByName("10.10.10.10"), 0x1234.toShort(), 0xBB.toByte(), 0xCC.toByte()))
+        return listOf(iwbuModule(0x1234.toShort(), InetAddress.getByName("10.10.10.10"), 0xBB.toByte(), 0xCC.toByte()))
     }
 
     private fun getNetworkModules(): List<iwbuModule> {
         // TODO("Scan network modules")
-        return listOf(iwbuModule(InetAddress.getByName("20.20.20.20"), 0x4321.toShort(), 0xBB.toByte(), 0xCC.toByte()))
+        return listOf(iwbuModule(0x4321.toShort(), InetAddress.getByName("20.20.20.20"), 0xBB.toByte(), 0xCC.toByte()))
     }
 
     private fun saveModule() {

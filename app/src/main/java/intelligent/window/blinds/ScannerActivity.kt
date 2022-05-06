@@ -1,6 +1,6 @@
 package intelligent.window.blinds
 
-import intelligent.window.blinds.utils.Module
+import intelligent.window.blinds.room.Module
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper

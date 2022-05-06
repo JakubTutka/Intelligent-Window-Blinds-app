@@ -1,10 +1,10 @@
-package intelligent.window.blinds.utils
+package intelligent.window.blinds.room
 
 import java.net.InetAddress
 
 data class Module(
-    var ipAddress: InetAddress,
     var id: Short,
+    var ipAddress: InetAddress,
     var phr: Byte,
     var ser: Byte) {
     override fun toString(): String {
