@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import intelligent.window.blinds.adapters.ScannedModulesAdapter
 import intelligent.window.blinds.room.ModuleViewModel
 import java.net.InetAddress
 import intelligent.window.blinds.room.Module as iwbuModule
@@ -54,9 +55,9 @@ class MainActivity : AppCompatActivity() {
     private fun getNetworkModules(): MutableList<iwbuModule> {
         // TODO("Scan network modules")
         val list : MutableList<iwbuModule> = mutableListOf()
-        for (i in 1..15) {
-            list.add(iwbuModule(0x4321.toShort(), InetAddress.getByName("20.20.20.20"), 0xBB.toByte(), 0xCC.toByte()))
-        }
+        list.add(iwbuModule(0x1.toShort(), InetAddress.getByName("20.20.20.20"), 0x1.toByte(), 0x2.toByte()))
+        list.add(iwbuModule(0x2.toShort(), InetAddress.getByName("30.30.30.30"), 0x14.toByte(), 0xF.toByte()))
+        list.add(iwbuModule(0x3.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
 
         return list
     }

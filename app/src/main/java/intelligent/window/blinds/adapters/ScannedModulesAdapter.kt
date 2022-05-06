@@ -1,4 +1,4 @@
-package intelligent.window.blinds
+package intelligent.window.blinds.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import intelligent.window.blinds.R
 import intelligent.window.blinds.room.Module
 import intelligent.window.blinds.room.ModuleEntity
 import intelligent.window.blinds.room.ModuleViewModel
@@ -18,13 +18,13 @@ class ScannedModulesAdapter(private var modules: MutableList<Module>, private va
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ScannedModulesAdapter.ViewHolder {
+    ): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_module, parent, false)
 
-        return ScannedModulesAdapter.ViewHolder(view).linkAdapter(this).linkViewModel(mModuleViewModel)
+        return ViewHolder(view).linkAdapter(this).linkViewModel(mModuleViewModel)
     }
 
-    override fun onBindViewHolder(holder: ScannedModulesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val module = modules[position]
         val id = modules[position].id
         val ip = modules[position].ipAddress.toString().drop(1)
@@ -58,12 +58,12 @@ class ScannedModulesAdapter(private var modules: MutableList<Module>, private va
             }
         }
 
-        fun linkAdapter(adapter: ScannedModulesAdapter) : ScannedModulesAdapter.ViewHolder{
+        fun linkAdapter(adapter: ScannedModulesAdapter) : ViewHolder {
             this.adapter = adapter
             return this
         }
 
-        fun linkViewModel(viewModel: ModuleViewModel) : ScannedModulesAdapter.ViewHolder{
+        fun linkViewModel(viewModel: ModuleViewModel) : ViewHolder {
             this.mModuleViewModule = viewModel
             return this
         }

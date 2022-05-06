@@ -4,6 +4,8 @@
     <string name="template_item_module_ip">IP: xxx.xxx.xxx.xxx</string>
     <string name="template_item_module_id">ID: 0x0000</string>
     <string name="template_item_module_button">Add</string>
+    <string name="template_item_edit_module_button">Edit</string>
+    <string name="template_item_remove_module_button">Remove</string>
     <string name="main_scanner_button">Scan network for devices</string>
     <string name="saved_modules">Saved modules</string>
     <string name="network_modules">Network modules</string>
