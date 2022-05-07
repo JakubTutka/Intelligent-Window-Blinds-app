@@ -10,12 +10,14 @@ import kotlinx.coroutines.launch
 class ModuleViewModel(application: Application): AndroidViewModel(application) {
 
     val readAllData: LiveData<List<ModuleEntity>>
+    val readAllId: LiveData<List<Short>>
     private val repository: ModuleRepository
 
     init {
         val moduleDao = ModuleDatabase.getDatabase(application).moduleDao()
         repository = ModuleRepository(moduleDao)
         readAllData = repository.readAllData
+        readAllId = repository.readAllId
     }
 
     fun addModule(module: ModuleEntity){

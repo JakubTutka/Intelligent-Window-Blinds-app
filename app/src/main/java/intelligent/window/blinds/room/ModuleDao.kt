@@ -14,4 +14,7 @@ interface ModuleDao {
 
     @Delete
     suspend fun deleteModule(moduleEntity: ModuleEntity)
+
+    @Query("SELECT id FROM modules")
+    fun readAllId(): LiveData<List<Short>>
 }

@@ -25,36 +25,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var moduleList: RecyclerView
     private lateinit var networkModuleList: RecyclerView
     private lateinit var mModuleViewModel: ModuleViewModel
+    private lateinit var idList: List<Short>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val savedModules = getSavedModules()
         moduleList = findViewById(R.id.saved_modules_list)
         networkModuleList = findViewById(R.id.network_modules_list)
+
         mModuleViewModel = ViewModelProvider(this).get(ModuleViewModel::class.java)
         setUpSavedModules()
+
         scannerButton = findViewById(R.id.scanner_button)
         scannerButton.setOnClickListener {
             setUpNetworkModules()
         }
 
-//        if (savedModules.isNotEmpty()) {
-//
-//            var savedTitle = findViewById<TextView>(R.id.saved_modules_title)
-//            savedTitle.visibility = View.VISIBLE
-//
-//            for (module in savedModules) {
-//                // TODO("Add saved modules to list")
-//            }
-//        }
-
-    }
-
-    private fun getSavedModules(): List<iwbuModule> {
-        // TODO("Open database and select all saved modules")
-        return listOf(iwbuModule(0x1234.toShort(), InetAddress.getByName("10.10.10.10"), 0xBB.toByte(), 0xCC.toByte()))
     }
 
     private fun getNetworkModules(): MutableList<iwbuModule> {
@@ -66,7 +53,14 @@ class MainActivity : AppCompatActivity() {
         list.add(iwbuModule(0x4.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
         list.add(iwbuModule(0x4.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
 
-        return list
+        val listOfNetworkModules: MutableList<iwbuModule> = mutableListOf()
+
+        for (module in list) {
+            if (!idList.contains(module.id)) {
+                listOfNetworkModules.add(module)
+            }
+        }
+        return listOfNetworkModules
     }
 
     private fun setUpNetworkModules(): Unit {
@@ -82,9 +76,10 @@ class MainActivity : AppCompatActivity() {
         mModuleViewModel.readAllData.observe(this, Observer { module ->
            adapter.setData(convertListEntityToModule(module))
         })
-    }
-    private fun saveModule() {
-        // TODO("Save module")
+
+        mModuleViewModel.readAllId.observe(this, Observer {
+            this.idList = it
+        })
     }
 
     private fun editModule() {
