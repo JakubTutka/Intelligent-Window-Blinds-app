@@ -23,4 +23,10 @@ class ModuleViewModel(application: Application): AndroidViewModel(application) {
             repository.addModule(module)
         }
     }
+
+    fun deleteModule(module: ModuleEntity){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteModule(module)
+        }
+    }
 }

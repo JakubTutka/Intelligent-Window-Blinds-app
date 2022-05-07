@@ -10,4 +10,8 @@ class ModuleRepository(private val moduleDao: ModuleDao) {
         moduleDao.addModule(module)
     }
 
+    suspend fun deleteModule(module: ModuleEntity){
+        moduleDao.deleteModule(module)
+    }
+
 }

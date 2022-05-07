@@ -15,19 +15,19 @@ import intelligent.window.blinds.room.ModuleEntity
 import intelligent.window.blinds.room.ModuleViewModel
 import intelligent.window.blinds.utils.convertModuleToEntity
 
-class SavedModulesAdapter(private var mModuleViewModel: ModuleViewModel) : RecyclerView.Adapter<SavedModulesAdapter.ViewHolder>() {
+class SavedModulesAdapter(private var mModuleViewModel: ModuleViewModel) : RecyclerView.Adapter<SavedModulesAdapter.SavedViewHolder>() {
 
-    private var modules = emptyList<Module>()
+    private var modules: List<Module> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder {
+    ): SavedViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_module_saved, parent, false)
-        return ViewHolder(view).linkViewModel(mModuleViewModel).linkContext(parent.context)
+        return SavedViewHolder(view).linkAdapter(this).linkViewModel(mModuleViewModel)
     }
 
-    override fun onBindViewHolder(holder: SavedModulesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SavedModulesAdapter.SavedViewHolder, position: Int) {
         val module = modules[position]
         val id = modules[position].id
         val ip = modules[position].ipAddress.toString().drop(1)
@@ -50,30 +50,36 @@ class SavedModulesAdapter(private var mModuleViewModel: ModuleViewModel) : Recyc
         notifyDataSetChanged()
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class SavedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val moduleName: TextView = view.findViewById(R.id.item_saved_module_name)
         val moduleIP: TextView = view.findViewById(R.id.item_saved_module_ip)
         val moduleID: TextView = view.findViewById(R.id.item_saved_module_id)
         private val removeModelButton: Button = view.findViewById(R.id.item_remove_module_button)
 
         lateinit var module: Module
+        private lateinit var adapter: SavedModulesAdapter
         private lateinit var mModuleViewModule: ModuleViewModel
-        private lateinit var context: Context
 
         init {
             removeModelButton.setOnClickListener{
                 Log.d("demo", "onClick on remove button on item: ${module.toString()}")
+                removeModuleFromDatabase(convertModuleToEntity(module))
+                adapter.notifyItemRemoved(adapterPosition)
             }
         }
 
-        fun linkViewModel(viewModel: ModuleViewModel) : ViewHolder {
+        fun linkViewModel(viewModel: ModuleViewModel) : SavedViewHolder {
             this.mModuleViewModule = viewModel
             return this
         }
 
-        fun linkContext(context: Context) : SavedModulesAdapter.ViewHolder {
-            this.context = context
+        fun linkAdapter(adapter: SavedModulesAdapter) : SavedViewHolder {
+            this.adapter = adapter
             return this
+        }
+
+        fun removeModuleFromDatabase(module: ModuleEntity){
+            mModuleViewModule.deleteModule(module)
         }
 
     }

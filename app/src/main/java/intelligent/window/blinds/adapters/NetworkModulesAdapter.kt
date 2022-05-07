@@ -1,5 +1,6 @@
 package intelligent.window.blinds.adapters
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,34 +14,34 @@ import intelligent.window.blinds.room.ModuleEntity
 import intelligent.window.blinds.room.ModuleViewModel
 import intelligent.window.blinds.utils.convertModuleToEntity
 
-class NetworkModulesAdapter(private var modules: MutableList<Module>, private var mModuleViewModel: ModuleViewModel) : RecyclerView.Adapter<NetworkModulesAdapter.ViewHolder>(){
+class NetworkModulesAdapter(private var modules: MutableList<Module>, private var mModuleViewModel: ModuleViewModel) : RecyclerView.Adapter<NetworkModulesAdapter.NetworkViewHolder>(){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder {
+    ): NetworkViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_module, parent, false)
-        return ViewHolder(view).linkAdapter(this).linkViewModel(mModuleViewModel)
+        return NetworkViewHolder(view).linkAdapter(this).linkViewModel(mModuleViewModel)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holderNetwork: NetworkViewHolder, position: Int) {
         val module = modules[position]
         val id = modules[position].id
         val ip = modules[position].ipAddress.toString().drop(1)
         val idHex = "0x" + Integer.toHexString(id.toInt())
         val moduleName = "$ip:$idHex"
 
-        holder.moduleName.text = moduleName
-        holder.moduleIP.text = ip
-        holder.moduleID.text = idHex
-        holder.module = module
+        holderNetwork.moduleName.text = moduleName
+        holderNetwork.moduleIP.text = ip
+        holderNetwork.moduleID.text = idHex
+        holderNetwork.module = module
     }
 
     override fun getItemCount(): Int {
         return modules.size
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class NetworkViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val moduleName: TextView = view.findViewById(R.id.item_module_name)
         val moduleIP: TextView = view.findViewById(R.id.item_module_ip)
         val moduleID: TextView = view.findViewById(R.id.item_module_id)
@@ -49,6 +50,7 @@ class NetworkModulesAdapter(private var modules: MutableList<Module>, private va
         lateinit var module: Module
         private lateinit var adapter: NetworkModulesAdapter
         private lateinit var mModuleViewModule: ModuleViewModel
+        private lateinit var context: Context
 
         init {
             addModuleButton.setOnClickListener{
@@ -59,12 +61,12 @@ class NetworkModulesAdapter(private var modules: MutableList<Module>, private va
             }
         }
 
-        fun linkAdapter(adapter: NetworkModulesAdapter) : ViewHolder {
+        fun linkAdapter(adapter: NetworkModulesAdapter) : NetworkViewHolder {
             this.adapter = adapter
             return this
         }
 
-        fun linkViewModel(viewModel: ModuleViewModel) : ViewHolder {
+        fun linkViewModel(viewModel: ModuleViewModel) : NetworkViewHolder {
             this.mModuleViewModule = viewModel
             return this
         }
@@ -72,6 +74,11 @@ class NetworkModulesAdapter(private var modules: MutableList<Module>, private va
         private fun addModuleToDatabase(moduleEntity: ModuleEntity) {
             mModuleViewModule.addModule(moduleEntity)
             Log.d("demo", "added to database: ${module.toString()}")
+        }
+
+        fun linkContext(context: Context): NetworkViewHolder {
+            this.context = context
+            return this
         }
 
     }
