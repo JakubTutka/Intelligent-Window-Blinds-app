@@ -37,7 +37,7 @@
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="1"
-                tools:listitem="@layout/item_module" />
+                tools:listitem="@layout/item_module_saved" />
 
             <TextView
                 android:id="@+id/network_modules_title"

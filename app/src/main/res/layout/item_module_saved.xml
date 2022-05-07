@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="4">
+    android:weightSum="4"
+    android:background="@drawable/back">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:orientation="vertical"
@@ -29,10 +30,11 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:weightSum="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/item_saved_module_name"
+            tools:layout_editor_absoluteX="16dp">
 
             <TextView
                 android:id="@+id/item_saved_module_ip"
@@ -64,19 +66,19 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/item_edit_module_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/template_item_edit_module_button"
-            android:textSize="8sp"
-            android:background="@color/primary"
-            android:textColor="@color/black"
+            android:layout_height="10dp"
             android:layout_margin="5dp"
-            android:layout_weight="3">
-        </androidx.appcompat.widget.AppCompatButton>
+            android:layout_weight="3"
+            android:background="@color/primary"
+            android:text="@string/template_item_edit_module_button"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            tools:ignore="SmallSp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/item_remove_module_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="10dp"
             android:layout_margin="5dp"
             android:layout_weight="3"
             android:background="@color/delete_button"

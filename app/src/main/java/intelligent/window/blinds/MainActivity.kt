@@ -2,15 +2,19 @@ package intelligent.window.blinds
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import intelligent.window.blinds.adapters.ScannedModulesAdapter
+import intelligent.window.blinds.adapters.NetworkModulesAdapter
+import intelligent.window.blinds.adapters.SavedModulesAdapter
 import intelligent.window.blinds.room.ModuleViewModel
+import intelligent.window.blinds.utils.convertListEntityToModule
 import java.net.InetAddress
 import intelligent.window.blinds.room.Module as iwbuModule
 
@@ -19,32 +23,33 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var scannerButton: Button
     private lateinit var moduleList: RecyclerView
-    private var scannedModules: List<iwbuModule>? = null
+    private lateinit var networkModuleList: RecyclerView
     private lateinit var mModuleViewModel: ModuleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var savedModules = getSavedModules()
 
+        val savedModules = getSavedModules()
         moduleList = findViewById(R.id.saved_modules_list)
+        networkModuleList = findViewById(R.id.network_modules_list)
         mModuleViewModel = ViewModelProvider(this).get(ModuleViewModel::class.java)
-
-        if (savedModules.isNotEmpty()) {
-
-            var savedTitle = findViewById<TextView>(R.id.saved_modules_title)
-            savedTitle.visibility = View.VISIBLE
-
-            for (module in savedModules) {
-                // TODO("Add saved modules to list")
-            }
-        }
-
+        setUpSavedModules()
         scannerButton = findViewById(R.id.scanner_button)
-
         scannerButton.setOnClickListener {
             setUpNetworkModules()
         }
+
+//        if (savedModules.isNotEmpty()) {
+//
+//            var savedTitle = findViewById<TextView>(R.id.saved_modules_title)
+//            savedTitle.visibility = View.VISIBLE
+//
+//            for (module in savedModules) {
+//                // TODO("Add saved modules to list")
+//            }
+//        }
+
     }
 
     private fun getSavedModules(): List<iwbuModule> {
@@ -63,10 +68,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpNetworkModules(): Unit {
-        moduleList.adapter = ScannedModulesAdapter(getNetworkModules(), mModuleViewModel)
-        moduleList.layoutManager = LinearLayoutManager(this)
+        networkModuleList.adapter = NetworkModulesAdapter(getNetworkModules(), mModuleViewModel)
+        networkModuleList.layoutManager = LinearLayoutManager(this)
     }
 
+    private fun setUpSavedModules(): Unit {
+        val adapter = SavedModulesAdapter(mModuleViewModel)
+        moduleList.adapter = adapter
+        moduleList.layoutManager = LinearLayoutManager(this)
+
+        mModuleViewModel.readAllData.observe(this, Observer { module ->
+           adapter.setData(convertListEntityToModule(module))
+        })
+    }
     private fun saveModule() {
         // TODO("Save module")
     }

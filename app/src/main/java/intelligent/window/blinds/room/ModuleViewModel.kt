@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class ModuleViewModel(application: Application): AndroidViewModel(application) {
 
-    private val readAllData: LiveData<List<ModuleEntity>>
+    val readAllData: LiveData<List<ModuleEntity>>
     private val repository: ModuleRepository
 
     init {

@@ -8,6 +8,6 @@ data class Module(
     var phr: Byte,
     var ser: Byte) {
     override fun toString(): String {
-        return "Module IP: %s, ID: 0x%X, PHR: 0x%02X, SER: 0x%02X".format(this.ipAddress.toString(), this.id, this.phr, this.ser)
+        return "Module IP: %s, ID: 0x%X, PHR: 0x%02X, SER: 0x%02X".format(this.ipAddress.toString().drop(1), this.id, this.phr, this.ser)
     }
 }
