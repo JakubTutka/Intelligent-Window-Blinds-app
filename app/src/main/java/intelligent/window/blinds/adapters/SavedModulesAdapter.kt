@@ -23,7 +23,7 @@ class SavedModulesAdapter(private var mModuleViewModel: ModuleViewModel) : Recyc
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_module, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_module_saved, parent, false)
         return ViewHolder(view).linkViewModel(mModuleViewModel).linkContext(parent.context)
     }
 

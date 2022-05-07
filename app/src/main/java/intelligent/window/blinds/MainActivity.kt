@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         list.add(iwbuModule(0x1.toShort(), InetAddress.getByName("20.20.20.20"), 0x1.toByte(), 0x2.toByte()))
         list.add(iwbuModule(0x2.toShort(), InetAddress.getByName("30.30.30.30"), 0x14.toByte(), 0xF.toByte()))
         list.add(iwbuModule(0x3.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
+        list.add(iwbuModule(0x4.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
 
         return list
     }
