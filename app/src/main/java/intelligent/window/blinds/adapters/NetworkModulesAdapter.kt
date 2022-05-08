@@ -73,7 +73,7 @@ class NetworkModulesAdapter(private var modules: MutableList<Module>, private va
 
         private fun addModuleToDatabase(moduleEntity: ModuleEntity) {
             mModuleViewModule.addModule(moduleEntity)
-            Log.d("demo", "added to database: ${module.toString()}")
+            Log.d("NetworkModulesAdapter", "added to database: ${module.toString()}")
         }
 
         fun linkContext(context: Context): NetworkViewHolder {

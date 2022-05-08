@@ -4,13 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [ModuleEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ModuleEntity::class], version = 2, exportSchema = false)
 abstract class ModuleDatabase : RoomDatabase() {
 
     abstract fun moduleDao(): ModuleDao
 
     companion object{
+
+        val migration_1_2: Migration = object: Migration(1,2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE modules ADD COLUMN isAdaptive INTEGER NOT NULL DEFAULT (0)")
+            }
+        }
+
         @Volatile
         private var INSTANCE: ModuleDatabase? = null
 
@@ -25,7 +34,7 @@ abstract class ModuleDatabase : RoomDatabase() {
                     context.applicationContext,
                     ModuleDatabase::class.java,
                     "module_database"
-                ).build()
+                ).addMigrations(migration_1_2).build()
                 INSTANCE = instance
                 return instance
             }

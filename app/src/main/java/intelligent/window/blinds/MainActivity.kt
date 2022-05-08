@@ -2,10 +2,7 @@ package intelligent.window.blinds
 
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +17,8 @@ import intelligent.window.blinds.room.Module as iwbuModule
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "MainActivity"
 
     private lateinit var scannerButton: Button
     private lateinit var moduleList: RecyclerView
@@ -80,10 +79,6 @@ class MainActivity : AppCompatActivity() {
         mModuleViewModel.readAllId.observe(this, Observer {
             this.idList = it
         })
-    }
-
-    private fun editModule() {
-        // TODO("Edit module, i.e. change local name, ID or delete from saved")
     }
 
 }
