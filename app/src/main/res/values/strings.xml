@@ -15,7 +15,7 @@
     <string name="set_adaptive_mode">Set adaptive mode</string>
     <string name="set_id">Set ID</string>
     <string name="set_window_blind_level">Set Window Blind level:</string>
-    <string name="current_light_level">Current Light Level -</string>
+    <string name="current_light_level">Current Light Level:</string>
     <string name="_255">255</string>
     <string name="get_current_level">Get current level</string>
     <string name="set_level">Set Level</string>

@@ -17,6 +17,7 @@ import intelligent.window.blinds.room.Module
 import intelligent.window.blinds.room.ModuleEntity
 import intelligent.window.blinds.room.ModuleViewModel
 import intelligent.window.blinds.utils.convertModuleToEntity
+import java.io.Serializable
 
 class SavedModulesAdapter(private var mModuleViewModel: ModuleViewModel) : RecyclerView.Adapter<SavedModulesAdapter.SavedViewHolder>() {
 
@@ -99,7 +100,9 @@ class SavedModulesAdapter(private var mModuleViewModel: ModuleViewModel) : Recyc
 
         private fun openEditModuleActivity(module: Module) {
             // TODO("Edit module, i.e. change local name, ID or delete from saved")
-            val intent = Intent(context, EditModuleActivity::class.java)
+            val intent = Intent(context, EditModuleActivity::class.java).also{
+                it.putExtra("EXTRA_MODULE", module as Serializable)
+            }
             context.startActivity(intent)
         }
 

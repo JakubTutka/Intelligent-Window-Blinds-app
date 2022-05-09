@@ -23,3 +23,11 @@ fun convertListEntityToModule(entityModules: List<ModuleEntity>): List<Module> {
 }
 
 fun Byte.toPositiveInt() = toInt() and 0xFF
+
+fun convertLevelToPercentage(level: Int): Int {
+    return ((level.toDouble()/255)*100).toInt()
+}
+
+fun convertPercentageToLevel(percent: Int): Int {
+    return ((percent.toDouble()/100)*255).toInt()
+}
