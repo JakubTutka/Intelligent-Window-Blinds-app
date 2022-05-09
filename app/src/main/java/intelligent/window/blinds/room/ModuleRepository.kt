@@ -11,6 +11,10 @@ class ModuleRepository(private val moduleDao: ModuleDao) {
         moduleDao.addModule(module)
     }
 
+    suspend fun updateModule(module: ModuleEntity){
+        moduleDao.updateModule(module)
+    }
+
     suspend fun deleteModule(module: ModuleEntity){
         moduleDao.deleteModule(module)
     }

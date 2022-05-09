@@ -12,6 +12,11 @@ fun convertModuleToEntity(module: Module): ModuleEntity {
     return ModuleEntity(module.id, module.ipAddress.toString().drop(1), module.phr, module.ser, module.isAdaptive)
 }
 
+fun convertEntityToModule(entity: ModuleEntity): Module {
+    val ip: String = entity.ipAddress
+    return Module(entity.id, InetAddress.getByName(ip), entity.phr, entity.ser, entity.isAdaptive)
+}
+
 fun convertListEntityToModule(entityModules: List<ModuleEntity>): List<Module> {
     val modules: MutableList<Module> = mutableListOf()
     for (entity in entityModules) {

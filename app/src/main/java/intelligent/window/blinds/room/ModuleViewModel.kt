@@ -26,6 +26,12 @@ class ModuleViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun updateModule(module: ModuleEntity){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateModule(module)
+        }
+    }
+
     fun deleteModule(module: ModuleEntity){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteModule(module)

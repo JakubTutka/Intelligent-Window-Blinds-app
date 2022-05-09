@@ -24,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:ignore="UselessParent">
+        tools:ignore="UselessParent"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,27 +40,6 @@
             android:layout_margin="10dp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/edit_id_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/set_id"
-            android:layout_marginEnd="10dp"
-            android:textSize="10pt"/>
-
-        <EditText
-            android:id="@+id/edit_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="3"
-            android:inputType="number" />
     </LinearLayout>
 
 </LinearLayout>

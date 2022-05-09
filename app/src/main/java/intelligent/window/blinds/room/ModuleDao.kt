@@ -12,6 +12,9 @@ interface ModuleDao {
     @Query("SELECT * FROM modules ORDER BY id ASC")
     fun readAllModules(): LiveData<List<ModuleEntity>>
 
+    @Update
+    suspend fun updateModule(moduleEntity: ModuleEntity)
+
     @Delete
     suspend fun deleteModule(moduleEntity: ModuleEntity)
 
