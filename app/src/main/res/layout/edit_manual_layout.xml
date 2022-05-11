@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
+        android:orientation="vertical"
         >
 
         <TextView
@@ -23,12 +24,23 @@
             android:textSize="10pt"
             android:layout_margin="5dp"/>
 
-        <NumberPicker
-            android:id="@+id/ser_level_picker"
+        <TextView
+            android:id="@+id/ser_level_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:text="0%"
+            android:textSize="30sp" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            style="?android:progressBarStyleHorizontal"
             />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

@@ -111,21 +111,46 @@ class EditModuleActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setUpManualLayout() {
 
-        val levelPicker: NumberPicker = findViewById(R.id.ser_level_picker)
+        val levelValue: TextView = findViewById(R.id.ser_level_value)
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+        val seekBar: SeekBar = findViewById(R.id.seekBar)
+
         val lightLevel: TextView = findViewById(R.id.light_level_value)
 
-        levelPicker.maxValue = 100
-        levelPicker.minValue = 0
-        levelPicker.value = convertLevelToPercentage(module.ser.toPositiveInt())
+        val moduleSerPercent = convertLevelToPercentage(module.ser.toPositiveInt())
+        levelValue.text = "$moduleSerPercent%"
+        progressBar.progress = moduleSerPercent
+        seekBar.progress = progressBar.progress
+
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                progressBar.progress = i
+                levelValue.text = "$i%"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+            }
+            }
+        )
+
+//        levelPicker.maxValue = 100
+//        levelPicker.minValue = 0
+//        levelPicker.value = convertLevelToPercentage(module.ser.toPositiveInt())
 
         lightLevel.text = convertLevelToPercentage(module.phr.toPositiveInt()).toString() + "%"
 
         findViewById<Button>(R.id.set_level_button).setOnClickListener {
-            updateModule(levelPicker.value)
+            updateModule(progressBar.progress)
         }
 
         findViewById<Button>(R.id.get_level_button).setOnClickListener {
-            getCurrentState(levelPicker)
+            getCurrentState()
         }
     }
 
@@ -152,7 +177,7 @@ class EditModuleActivity : AppCompatActivity() {
         Toast.makeText(this, "Module Updated!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun getCurrentState(levelPicker: NumberPicker) {
+    private fun getCurrentState() {
         var getReqModule: Module? = null
 //        val thread = Thread {
 //            try {
@@ -177,7 +202,7 @@ class EditModuleActivity : AppCompatActivity() {
             }
             job.join()
             Log.d(TAG, "GET REQUEST MODULES: $getReqModule")
-            levelPicker.value = convertLevelToPercentage(getReqModule!!.ser.toInt())
+//            levelPicker.value = convertLevelToPercentage(getReqModule!!.ser.toInt())
             findViewById<TextView>(R.id.light_level_value).text = convertLevelToPercentage(getReqModule!!.phr.toPositiveInt()).toString()
         }
         Toast.makeText(this, "Value updated!", Toast.LENGTH_SHORT).show()
