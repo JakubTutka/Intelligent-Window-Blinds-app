@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/zipcode_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Zipcode"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp" />
+
+            <Button
+                android:id="@+id/get_weather_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get_weather" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/coordinates"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="12pt"/>
+
+                <TextView
+                    android:id="@+id/lat_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12pt"
+                    android:layout_marginEnd="15dp"
+                    tools:text="LAT"/>
+
+                <TextView
+                    android:id="@+id/lon_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12pt"
+                    tools:text="LON" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/city_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12pt"
+                tools:text="CITY"/>
+
+            <ImageView
+                android:id="@+id/weather_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/temp_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="TEMP"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="12pt" />
+
+                <TextView
+                    android:id="@+id/cloud_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12pt"
+                    tools:text="CLOUD" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ser_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="12pt"
+                tools:text="Window blind should be: x %" />
+
+            <Button
+                android:id="@+id/set_ser_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set proposed" />
+
+       </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

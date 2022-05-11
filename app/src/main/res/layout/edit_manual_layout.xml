@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/ser_level_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_window_blind_level"
+            android:textStyle="bold"
+            android:textSize="10pt"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/ser_level_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:textSize="30sp" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            style="?android:progressBarStyleHorizontal"
+            />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/light_level_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_light_level"
+            android:textStyle="bold"
+            android:textSize="10pt"
+            android:layout_margin="5dp"/>
+        <TextView
+            android:id="@+id/light_level_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_255"
+            android:textStyle="bold"
+            android:textSize="10pt"
+            android:layout_margin="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="5pt"
+        android:layout_marginTop="5pt">
+
+        <Button
+            android:id="@+id/get_level_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="@color/get_modules_button"
+            android:text="@string/get_current_level"/>
+
+        <Button
+            android:id="@+id/set_level_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_level"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+

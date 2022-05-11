@@ -6,7 +6,8 @@
  * Email: piotrwegrzyn@protonmail.com
  *******************************************/
 
-import intelligent.window.blinds.utils.Module
+import android.util.Log
+import intelligent.window.blinds.room.Module
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
@@ -25,7 +26,7 @@ fun receiveBroadcastModules(timeoutMilis: Int, socket: DatagramSocket): Map<Inet
         socket.receive(packet)
         packet.getAddress()?.apply {
             if (!modules.containsKey(packet.getAddress())) {
-                modules[packet.getAddress()] = Module(packet.getAddress(), buildID(packetBuffer[1], packetBuffer[2]), packetBuffer[3], packetBuffer[4])
+                modules[packet.getAddress()] = Module(buildID(packetBuffer[1], packetBuffer[2]), packet.getAddress(), packetBuffer[3], packetBuffer[4])
             }
         }
 
@@ -45,6 +46,10 @@ fun getRequest(module: Module, socket: DatagramSocket, port: Int, timeoutMilis: 
     val message = ByteArray(5) { 0.toByte() }
     message[0] = 0x02
 
+    sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
     sendPacket(module.ipAddress, socket, port, message)
     Thread.sleep(timeoutMilis.toLong())
 
@@ -67,6 +72,7 @@ fun getRequest(module: Module, socket: DatagramSocket, port: Int, timeoutMilis: 
             break
         }
     }
+    Log.d("Dupa", "$module")
     return module
 
 }
