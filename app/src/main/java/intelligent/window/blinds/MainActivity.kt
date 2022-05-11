@@ -61,38 +61,39 @@ class MainActivity : AppCompatActivity() {
 
         val listOfNetworkModules: MutableList<Module> = mutableListOf()
         val myList: MutableList<Module> = mutableListOf<Module>()
-
-        runBlocking {
-            val job = launch(Dispatchers.Default) {
-                val socket = DatagramSocket(PORT)
-                val modulesMap = receiveBroadcastModules(TIMEOUT, socket)
-                modulesMap.forEach {
-                    myList.add(it.value)
+        val scanReal: Boolean = false
+        if (scanReal) {
+            runBlocking {
+                val job = launch(Dispatchers.Default) {
+                    val socket = DatagramSocket(PORT)
+                    val modulesMap = receiveBroadcastModules(TIMEOUT, socket)
+                    modulesMap.forEach {
+                        myList.add(it.value)
+                    }
+                    Log.d(TAG, "GET LIST: $myList")
+                    socket.close()
                 }
-                Log.d(TAG, "GET LIST: $myList")
-                socket.close()
-            }
-            job.join()
+                job.join()
 
-            val list1: List<Module> = listOf(
-                Module(
-                    0x1234.toShort(),
-                    InetAddress.getByName("10.42.0.66"),
-                    phr = 0x00.toByte(),
-                    ser = 0x00.toByte()
+                val list1: List<Module> = listOf(
+                    Module(
+                        0x1234.toShort(),
+                        InetAddress.getByName("10.42.0.66"),
+                        phr = 0x00.toByte(),
+                        ser = 0x00.toByte()
+                    )
                 )
-            )
-            Log.d(TAG, "GET LIST: $list1")
+                Log.d(TAG, "GET LIST: $list1")
 
-            for (module in myList) {
-                if (!idList.contains(module.id)) {
-                    listOfNetworkModules.add(module)
+                for (module in myList) {
+                    if (!idList.contains(module.id)) {
+                        listOfNetworkModules.add(module)
+                    }
                 }
             }
         }
-
         Log.d(TAG, listOfNetworkModules.toString())
-        return listOfNetworkModules
+        return getSampleListOfModules().toMutableList()
     }
 
     private fun setUpNetworkModules(): Unit {
@@ -118,10 +119,10 @@ class MainActivity : AppCompatActivity() {
 
     fun getSampleListOfModules(): List<Module> {
         val list : MutableList<Module> = mutableListOf()
-        list.add(Module(0x1.toShort(), InetAddress.getByName("20.20.20.20"), 0x80.toByte(), 0x80.toByte()))
-        list.add(Module(0x2.toShort(), InetAddress.getByName("30.30.30.30"), 0x14.toByte(), 0xF.toByte()))
-        list.add(Module(0x3.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
-        list.add(Module(0x4.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
+        list.add(Module(0x1.toShort(), InetAddress.getByName("172.160.0.99"), 0x80.toByte(), 0x80.toByte()))
+        list.add(Module(0x2.toShort(), InetAddress.getByName("172.160.0.115"), 0x14.toByte(), 0xF.toByte()))
+        list.add(Module(0x3.toShort(), InetAddress.getByName("172.160.0.34"), 0xFF.toByte(), 0xA.toByte()))
+        list.add(Module(0x4.toShort(), InetAddress.getByName("172.160.0.103"), 0xFF.toByte(), 0xA.toByte()))
         return list
     }
 

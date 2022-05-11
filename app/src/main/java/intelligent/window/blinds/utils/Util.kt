@@ -41,13 +41,13 @@ fun convertPercentageToLevel(percent: Int): Int {
 
 fun mapTempToSer(temp: Double): Int {
     if (temp > 30){
-        return 0
-    } else if (temp < 30 && temp >= 20) {
-        return 3
-    } else if (temp < 20 && temp >= 10) {
-        return 5
-    } else if (temp < 10) {
         return 10
+    } else if (temp < 30 && temp >= 20) {
+        return 5
+    } else if (temp < 20 && temp >= 10) {
+        return 3
+    } else if (temp < 10) {
+        return 0
     }
     return 0
 }
