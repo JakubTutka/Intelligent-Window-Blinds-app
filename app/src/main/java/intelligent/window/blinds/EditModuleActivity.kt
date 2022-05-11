@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import getRequest
 import intelligent.window.blinds.api.weather.ApiInterface
 import intelligent.window.blinds.api.weather.WeatherConstants
 import intelligent.window.blinds.api.weather.WeatherData
@@ -16,6 +17,9 @@ import intelligent.window.blinds.room.ModuleEntity
 import intelligent.window.blinds.room.ModuleViewModel
 import intelligent.window.blinds.utils.*
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -121,7 +125,7 @@ class EditModuleActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.get_level_button).setOnClickListener {
-//            getCurrentState(levelPicker)
+            getCurrentState(levelPicker)
         }
     }
 
@@ -148,8 +152,8 @@ class EditModuleActivity : AppCompatActivity() {
         Toast.makeText(this, "Module Updated!", Toast.LENGTH_SHORT).show()
     }
 
-//    private fun getCurrentState(levelPicker: NumberPicker) {
-//        var getReqModule: Module? = null
+    private fun getCurrentState(levelPicker: NumberPicker) {
+        var getReqModule: Module? = null
 //        val thread = Thread {
 //            try {
 //                val socket = DatagramSocket(PORT)
@@ -160,11 +164,24 @@ class EditModuleActivity : AppCompatActivity() {
 //                e.printStackTrace()
 //            }
 //        }
-//        Log.d(TAG, "GET REQUEST MODULES: $getReqModule")
-//        levelPicker.value = convertLevelToPercentage(getReqModule!!.ser.toInt())
-//        findViewById<TextView>(R.id.light_level_value).text = convertLevelToPercentage(getReqModule!!.phr.toInt()).toString()
-//        Toast.makeText(this, "Value updated!", Toast.LENGTH_SHORT).show()
-//    }
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                try {
+                    val socket = DatagramSocket(PORT)
+                    getReqModule = getRequest(module, socket, PORT, 1000)
+                    Log.d(TAG, "GET REQ")
+                    socket.close()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            job.join()
+            Log.d(TAG, "GET REQUEST MODULES: $getReqModule")
+            levelPicker.value = convertLevelToPercentage(getReqModule!!.ser.toInt())
+            findViewById<TextView>(R.id.light_level_value).text = convertLevelToPercentage(getReqModule!!.phr.toPositiveInt()).toString()
+        }
+        Toast.makeText(this, "Value updated!", Toast.LENGTH_SHORT).show()
+    }
 
     private fun setUpAdaptiveLayout() {
         latValueText = findViewById(R.id.lat_value)

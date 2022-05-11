@@ -23,4 +23,8 @@ class ModuleRepository(private val moduleDao: ModuleDao) {
         moduleDao.updateAdaptiveColumn(isAdaptive, id)
     }
 
+    suspend fun deleteAllData() {
+        moduleDao.nukeTable()
+    }
+
 }

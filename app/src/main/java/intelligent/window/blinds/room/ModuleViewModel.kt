@@ -43,4 +43,10 @@ class ModuleViewModel(application: Application): AndroidViewModel(application) {
             repository.updateAdaptiveColumn(isAdaptive, id)
         }
     }
+
+    fun deleteAllData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllData()
+        }
+    }
 }

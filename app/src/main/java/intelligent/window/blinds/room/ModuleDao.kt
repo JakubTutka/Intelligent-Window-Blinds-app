@@ -23,4 +23,7 @@ interface ModuleDao {
 
     @Query("UPDATE modules SET isAdaptive = :isAdaptive WHERE id = :id")
     fun updateAdaptiveColumn(isAdaptive: Int, id: Short)
+
+    @Query("DELETE FROM modules")
+    fun nukeTable()
 }

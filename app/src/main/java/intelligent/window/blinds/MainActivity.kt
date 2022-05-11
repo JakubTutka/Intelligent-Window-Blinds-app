@@ -15,14 +15,11 @@ import intelligent.window.blinds.adapters.SavedModulesAdapter
 import intelligent.window.blinds.room.ModuleViewModel
 import intelligent.window.blinds.utils.convertEntityToModule
 import intelligent.window.blinds.utils.convertListEntityToModule
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import receiveBroadcastModules
 import java.net.DatagramSocket
 import java.net.InetAddress
 import intelligent.window.blinds.room.Module
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mModuleViewModel: ModuleViewModel
     private lateinit var idList: List<Short>
 
+    @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,37 +59,45 @@ class MainActivity : AppCompatActivity() {
     private fun getNetworkModules(): MutableList<Module> {
         // TODO("Scan network modules")
 
-//        val myList: MutableList<Module> = mutableListOf<Module>()
-//
-//        val thread = Thread {
-//            try {
-//                val socket = DatagramSocket(PORT)
-//                val modulesMap = receiveBroadcastModules(TIMEOUT, socket)
-//                modulesMap.forEach {
-//                    myList.add(it.value)
-//                }
-//                Log.d(TAG, "GET LIST: $myList")
-//                socket.close()
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//        thread.start()
-
-        val list1: List<Module> = listOf(Module(0x1234.toShort(), InetAddress.getByName("10.42.0.66"), phr = 0x00.toByte(), ser = 0x00.toByte()))
-        Log.d(TAG, "GET LIST: $list1")
         val listOfNetworkModules: MutableList<Module> = mutableListOf()
+        val myList: MutableList<Module> = mutableListOf<Module>()
 
-//        for (module in list1) {
-//            if (!idList.contains(module.id)) {
-//                listOfNetworkModules.add(module)
-//            }
-//        }
-        return list1.toMutableList()
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                val socket = DatagramSocket(PORT)
+                val modulesMap = receiveBroadcastModules(TIMEOUT, socket)
+                modulesMap.forEach {
+                    myList.add(it.value)
+                }
+                Log.d(TAG, "GET LIST: $myList")
+                socket.close()
+            }
+            job.join()
+
+            val list1: List<Module> = listOf(
+                Module(
+                    0x1234.toShort(),
+                    InetAddress.getByName("10.42.0.66"),
+                    phr = 0x00.toByte(),
+                    ser = 0x00.toByte()
+                )
+            )
+            Log.d(TAG, "GET LIST: $list1")
+
+            for (module in myList) {
+                if (!idList.contains(module.id)) {
+                    listOfNetworkModules.add(module)
+                }
+            }
+        }
+
+        Log.d(TAG, listOfNetworkModules.toString())
+        return listOfNetworkModules
     }
 
     private fun setUpNetworkModules(): Unit {
-        networkModuleList.adapter = NetworkModulesAdapter(getNetworkModules(), mModuleViewModel)
+        val list = getNetworkModules()
+        networkModuleList.adapter = NetworkModulesAdapter(list, mModuleViewModel)
         networkModuleList.layoutManager = LinearLayoutManager(this)
     }
 
