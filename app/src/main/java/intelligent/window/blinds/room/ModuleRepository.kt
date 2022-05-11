@@ -19,4 +19,8 @@ class ModuleRepository(private val moduleDao: ModuleDao) {
         moduleDao.deleteModule(module)
     }
 
+    suspend fun updateAdaptiveColumn(isAdaptive: Int, id: Short){
+        moduleDao.updateAdaptiveColumn(isAdaptive, id)
+    }
+
 }

@@ -20,4 +20,7 @@ interface ModuleDao {
 
     @Query("SELECT id FROM modules")
     fun readAllId(): LiveData<List<Short>>
+
+    @Query("UPDATE modules SET isAdaptive = :isAdaptive WHERE id = :id")
+    fun updateAdaptiveColumn(isAdaptive: Int, id: Short)
 }

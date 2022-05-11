@@ -1,6 +1,7 @@
 package intelligent.window.blinds
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import receiveBroadcastModules
 import java.net.DatagramSocket
 import java.net.InetAddress
-import intelligent.window.blinds.room.Module as iwbuModule
+import intelligent.window.blinds.room.Module
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var networkModuleList: RecyclerView
     private lateinit var mModuleViewModel: ModuleViewModel
     private lateinit var idList: List<Short>
-    private val socket: DatagramSocket = DatagramSocket(PORT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,36 +55,39 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        socket.close()
     }
 
     @DelicateCoroutinesApi
-    private fun getNetworkModules(): MutableList<iwbuModule> {
+    private fun getNetworkModules(): MutableList<Module> {
         // TODO("Scan network modules")
 
-        var list: List<iwbuModule> = emptyList()
+//        val myList: MutableList<Module> = mutableListOf<Module>()
+//
+//        val thread = Thread {
+//            try {
+//                val socket = DatagramSocket(PORT)
+//                val modulesMap = receiveBroadcastModules(TIMEOUT, socket)
+//                modulesMap.forEach {
+//                    myList.add(it.value)
+//                }
+//                Log.d(TAG, "GET LIST: $myList")
+//                socket.close()
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+//        thread.start()
 
+        val list1: List<Module> = listOf(Module(0x1234.toShort(), InetAddress.getByName("10.42.0.66"), phr = 0x00.toByte(), ser = 0x00.toByte()))
+        Log.d(TAG, "GET LIST: $list1")
+        val listOfNetworkModules: MutableList<Module> = mutableListOf()
 
-        val thread = Thread {
-            try {
-                val modulesMap = receiveBroadcastModules(TIMEOUT, socket)
-                list = modulesMap.values.toList()
-                Log.d(TAG, "GET LIST: $list")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        thread.start()
-
-        list = getSampleListOfModules()
-        val listOfNetworkModules: MutableList<iwbuModule> = mutableListOf()
-
-        for (module in list) {
-            if (!idList.contains(module.id)) {
-                listOfNetworkModules.add(module)
-            }
-        }
-        return listOfNetworkModules
+//        for (module in list1) {
+//            if (!idList.contains(module.id)) {
+//                listOfNetworkModules.add(module)
+//            }
+//        }
+        return list1.toMutableList()
     }
 
     private fun setUpNetworkModules(): Unit {
@@ -107,12 +110,12 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getSampleListOfModules(): List<iwbuModule> {
-        val list : MutableList<iwbuModule> = mutableListOf()
-        list.add(iwbuModule(0x1.toShort(), InetAddress.getByName("20.20.20.20"), 0x80.toByte(), 0x80.toByte()))
-        list.add(iwbuModule(0x2.toShort(), InetAddress.getByName("30.30.30.30"), 0x14.toByte(), 0xF.toByte()))
-        list.add(iwbuModule(0x3.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
-        list.add(iwbuModule(0x4.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
+    fun getSampleListOfModules(): List<Module> {
+        val list : MutableList<Module> = mutableListOf()
+        list.add(Module(0x1.toShort(), InetAddress.getByName("20.20.20.20"), 0x80.toByte(), 0x80.toByte()))
+        list.add(Module(0x2.toShort(), InetAddress.getByName("30.30.30.30"), 0x14.toByte(), 0xF.toByte()))
+        list.add(Module(0x3.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
+        list.add(Module(0x4.toShort(), InetAddress.getByName("30.30.30.30"), 0xFF.toByte(), 0xA.toByte()))
         return list
     }
 

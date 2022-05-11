@@ -19,4 +19,6 @@
     <string name="_255">255</string>
     <string name="get_current_level">Get current level</string>
     <string name="set_level">Set Level</string>
+    <string name="coordinates">Coordinates:</string>
+    <string name="get_weather">Get weather</string>
 </resources>

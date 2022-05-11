@@ -6,6 +6,7 @@
  * Email: piotrwegrzyn@protonmail.com
  *******************************************/
 
+import android.util.Log
 import intelligent.window.blinds.room.Module
 import java.net.DatagramPacket
 import java.net.DatagramSocket
@@ -46,6 +47,10 @@ fun getRequest(module: Module, socket: DatagramSocket, port: Int, timeoutMilis: 
     message[0] = 0x02
 
     sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
+    sendPacket(module.ipAddress, socket, port, message)
     Thread.sleep(timeoutMilis.toLong())
 
     val startTime = System.currentTimeMillis()
@@ -67,6 +72,7 @@ fun getRequest(module: Module, socket: DatagramSocket, port: Int, timeoutMilis: 
             break
         }
     }
+    Log.d("Dupa", "$module")
     return module
 
 }
